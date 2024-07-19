@@ -34,7 +34,7 @@ public class flower_road {
     private static void backTracking(int N, int depth, int[][] flowers, int sum){
         if(depth == 3){
             answer = Math.min(sum, answer);
-            return;
+            return; // 이전 호출 스택으로 돌아감
         }
         for (int x = 1; x < N-1; x++) {
             for (int y = 1; y < N-1; y++) {
