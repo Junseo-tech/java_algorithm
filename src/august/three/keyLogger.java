@@ -13,37 +13,44 @@ public class keyLogger {
         // > < : 오른쪽 왼쪽으로 한 칸 씩
         int T = Integer.parseInt(br.readLine());
         for(int i = 0; i < T; i++){
+            StringBuilder sb = new StringBuilder();
             String pwd = br.readLine();
-            Stack<Character> password = new Stack<>();
-            for(int j = 0; j < pwd.length(); j++){
-                password.push(pwd.charAt(j));
+            Stack<Character> ans = guessPwd(pwd);
+            for(Character ele : ans){
+                sb.append(ele);
+            }
+            System.out.println(sb);
+
+        }
+
+    }
+
+    private static Stack<Character> guessPwd(String pwd){
+        Stack<Character> left = new Stack<>();
+        Stack<Character> right = new Stack<>();
+        for(int i = 0; i < pwd.length(); i++) {
+            if (pwd.charAt(i) == '>' && !right.isEmpty()) {
+                left.push(right.pop());
+                continue;
+            } else if (pwd.charAt(i) == '<' && !left.isEmpty()) {
+                right.push(left.pop());
+                continue;
+            } else if (pwd.charAt(i) == '-' && !left.isEmpty()) {
+                left.pop();
+                continue;
+            } else if(isPossible(pwd.charAt(i))){
+                left.push(pwd.charAt(i));
             }
         }
-    }
-
-    private String guessPwd(Stack<Character> pwd){
-        Stack<Character> answer = new Stack<>();
-        Stack<Character> tempStack = new Stack<>();
-        while(!pwd.isEmpty()){
-            char temp = pwd.pop();
-            if(answer.empty()){
-                answer.push(temp);
-            }
-            if (answer.peek().equals("<")){
-                answer.pop();
-            } else if(answer.peek().equals(">")){
-                answer.pop(); // >
-
-            } else if(answer.peek().equals("-")){
-                answer.pop();
-            } else {
-                answer.push(temp);
-            }
+        while(!right.isEmpty()){
+            left.push(right.pop());
         }
-        return null;
+
+        return left;
     }
 
-    private static boolean isPass(char c){
-        return Character.isUpperCase(c) || Character.isLowerCase(c) || Character.isDigit(c);
+    private static boolean isPossible(Character pwd){
+        return Character.isUpperCase(pwd) || Character.isDigit(pwd) || Character.isLowerCase(pwd);
     }
+
 }
