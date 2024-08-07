@@ -48,10 +48,10 @@ public class make_color_paper {
             int now_x = (start_x + end_x) / 2;
             int now_y = (start_y + end_y) / 2;
 
-            splitPaper(start_x, start_y, now_x, now_y);
-            splitPaper(start_x, now_y + 1, now_x, end_y);
-            splitPaper(now_x + 1, start_y, end_x, now_y);
-            splitPaper(now_x + 1, now_y + 1, end_x, end_y);
+            splitPaper(start_x, start_y, now_x, now_y); // 0 0 3 3
+            splitPaper(start_x, now_y + 1, now_x, end_y); // 0 4 3 7
+            splitPaper(now_x + 1, start_y, end_x, now_y); // 4 0 7 3
+            splitPaper(now_x + 1, now_y + 1, end_x, end_y); // 4 4 7 7
 
         }
     }
