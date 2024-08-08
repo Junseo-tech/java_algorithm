@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 public class algorithm_class_merge_sort1 {
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static int N;
-    private  static int [] A;
+    private static int [] A;
     private static int K;
     private static int count = 0;
     public static void main(String[] args) throws IOException {
