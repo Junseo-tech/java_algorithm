@@ -1,0 +1,45 @@
+package algo;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class SWEA1952 {
+	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	private static int[] plans = new int[13];
+	private static int day, month, three_month, year;
+	private static int[] dp = new int[13];
+	private static StringBuilder sb = new StringBuilder();
+	public static void main(String[] args) throws IOException {
+		int T = Integer.parseInt( br.readLine());
+		for(int tc = 1; tc <= T; tc++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			day = Integer.parseInt(st.nextToken());
+			month = Integer.parseInt(st.nextToken());
+			three_month = Integer.parseInt(st.nextToken());
+			year = Integer.parseInt(st.nextToken());
+	
+			
+			st = new StringTokenizer(br.readLine());
+			for(int i = 1; i < 13; i++) {
+				plans[i] = Integer.parseInt(st.nextToken());
+			}
+			int answer = dynamic();
+
+			sb.append("#").append(tc).append(" ").append(answer).append("\n");
+		}
+		System.out.println(sb);
+	}
+	
+	private static int dynamic() {
+		int answer = 0;
+		dp[1] = Math.min(plans[1] * day, month);
+		dp[2] = Math.min(plans[2] * day + dp[1], month + dp[1]);
+		for(int i = 3; i < 13; i++) {
+			dp[i] = Math.min(plans[i] * day + dp[i-1], Math.min(month + dp[i-1], dp[i-3] + three_month));
+		}
+		return Math.min(dp[12], year);
+	}
+
+}
