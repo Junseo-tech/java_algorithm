@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class SWEA1247 {
+public class SWEA1247_최적화전 {
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static int N;
 	private static int company_x, company_y, home_x, home_y;

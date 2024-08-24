@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
+public class BOJ3109 {
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static int R,C;
 	private static char[][] maps;

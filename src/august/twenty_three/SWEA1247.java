@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class SWEA1247_BEST {
+public class SWEA1247 {
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static int N;
 	private static int[][] customers;
