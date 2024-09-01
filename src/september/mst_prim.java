@@ -13,6 +13,7 @@ public class mst_prim {
     private static StringBuilder sb = new StringBuilder();
     private static int V,E;
     private static List<Edge>[] graph;
+
     static class Edge implements Comparable<Edge> {
         int next, weight;
         public Edge(int next, int weight) {
