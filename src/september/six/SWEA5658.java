@@ -18,7 +18,9 @@ public class SWEA5658 {
             N = Integer.parseInt(st.nextToken());
             K = Integer.parseInt(st.nextToken());
             input = br.readLine();
-            String endPoint = input + input.substring(0, (N / 4) - 1);
+            String endPoint = input + input.substring(0, (N / 4) - 1); // input의 뒤에
+            list.clear();
+
             for(int i = 0; i < N; i++) {
                 int temp = Integer.parseInt(endPoint.substring(i, i + N/4), 16);
                 if(!list.contains(temp)) {
