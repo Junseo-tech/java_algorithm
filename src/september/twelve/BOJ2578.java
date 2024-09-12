@@ -29,7 +29,7 @@ public class BOJ2578 {
 		}
 		
 		for(int i = 0; i < 25; i++) {
-			findBingo(i);
+			findBingo(numbers[i]);
 		}
 		
 		for(int i = 0; i < 5; i ++) {
@@ -58,6 +58,7 @@ public class BOJ2578 {
 			int temp_y = temp[1];
 			
 			if(bingo[temp_x][temp_y] == findNum) {
+				
 				visited[temp_x][temp_y] = true;
 				return;
 			}
