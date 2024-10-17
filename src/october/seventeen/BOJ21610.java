@@ -16,6 +16,7 @@ public class BOJ21610 {
     private static int[][] command;
     private static Queue<int[]> queue = new LinkedList<>();
     private static int answer = 0;
+    private static boolean[][] visited;
     public static void main(String[] args) throws IOException {
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
@@ -50,6 +51,8 @@ public class BOJ21610 {
             }
         }
 
+        System.out.println(answer);
+
     }
 
     private static void skill() {
@@ -57,72 +60,85 @@ public class BOJ21610 {
             int d = command[i][0] - 1; // 0-base 맞춰주기 , 방향
             int s = command[i][1];
             move(d, s);
-            boolean[][] visited = rain();
-            makeCloud(visited);
+            rain();
+            copyWaterBugMagic();
+            makeCloud();
         }
     }
 
     private static void move(int d, int s) {
-        Queue<int[]> newQueue = new LinkedList<>();
         int size = queue.size();
-
+        Queue<int[]> newQueue = new LinkedList<>();
         for (int i = 0; i < size; i++) {
             int[] temp = queue.poll();
             int temp_x = temp[0];
             int temp_y = temp[1];
 
             // s만큼 이동하고 나머지 연산으로 범위 안으로 들어오게 처리
-            int nx = ((temp_x + dx[d] * s) % N + N) % N;
-            int ny = ((temp_y + dy[d] * s) % N + N) % N;
+            int nx = temp_x + dx[d] * s;
+            int ny = temp_y + dy[d] * s;
 
-            System.out.println("nx : " + nx + " ny : " + ny);
+            nx = (nx % N + N) % N;
+            ny = (ny % N + N) % N;
 
-            queue.add(new int[]{nx, ny});
+            newQueue.add(new int[]{nx, ny});
         }
+        queue = newQueue;
     }
 
 
-    private static boolean[][] rain() {
-        boolean[][] visited = new boolean[N][N];
+    private static void rain() {
+        visited = new boolean[N][N];
+        Queue<int[]> newQueue = new LinkedList<>();
         while(!queue.isEmpty()) {
             int[] temp = queue.poll();
             int temp_x = temp[0];
             int temp_y = temp[1];
 
+            newQueue.add(new int[]{temp_x, temp_y});
             visited[temp_x][temp_y] = true;
 
             area[temp_x][temp_y] = area[temp_x][temp_y] + 1;
-
-            int plus = copyWaterBugMagic(temp_x, temp_y);
-            area[temp_x][temp_y] += plus;
         }
-        return visited;
+        queue = newQueue;
     }
 
-    private static int copyWaterBugMagic(int temp_x, int temp_y) {
-        int count = 0;
-        for (int d = 1; d < 8; d += 2) {
-            int nx = temp_x + dx[d];
-            int ny = temp_y + dy[d];
 
-            // 배열 범위를 벗어나는지 확인
-            if (nx >= 0 && ny >= 0 && nx < N && ny < N) {
-                if (area[nx][ny] >= 1) count++;
+    private static void copyWaterBugMagic() {
+        Queue<int[]> newQueue = new LinkedList<>(queue);  // 현재 구름 좌표 복사
+        while (!newQueue.isEmpty()) {
+            int[] temp = newQueue.poll();
+            int temp_x = temp[0];
+            int temp_y = temp[1];
+
+            int count = 0;
+            // 대각선 방향 탐색
+            for (int d = 1; d < 8; d += 2) {
+                int nx = temp_x + dx[d];
+                int ny = temp_y + dy[d];
+
+                if (nx >= 0 && ny >= 0 && nx < N && ny < N) {
+                    if (area[nx][ny] >= 1) {
+                        count++;  // 대각선에 물이 있는 칸의 개수를 카운트
+                    }
+                }
             }
+            area[temp_x][temp_y] += count;  // 물 복사
         }
-        return count;
     }
 
 
-    private static void makeCloud(boolean[][] visited) {
+    private static void makeCloud() {
+        Queue<int[]> newQueue = new LinkedList<>();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if(area[i][j] >= 2 && !visited[i][j]) {
                     area[i][j] -= 2;
-                    queue.add(new int[]{i, j});
+                    newQueue.add(new int[]{i, j});
                 }
             }
         }
+        queue = newQueue;
 
     }
 }
