@@ -4,79 +4,83 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
+	private static final int N = 9;
+	private static int[][] game = new int[N][N];
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	private static int N = 9;
-	private static int[][] grid;
+	private static StringBuilder sb = new StringBuilder();
 	public static void main(String[] args) throws IOException {
-		grid = new int[N][N];
-		
 		for(int i = 0; i < N; i++) {
 			String temp = br.readLine();
 			for (int j = 0; j < N; j++) {
-				grid[i][j] = temp.charAt(j) - '0';
+				game[i][j] = temp.charAt(j) - '0';
 			}
 		}
 		
-		backtracking(0,0);
 		
-		for(int i = 0; i < N; i++) {
-			for(int j = 0; j < N; j++) {
-				System.out.print(grid[i][j]);
-			}
-			System.out.println();
-		}
+		backtracking(0, 0);
+		
 	}
 	
 	
-	private static boolean backtracking(int row, int col) { 
+	private static void backtracking(int row, int col) {
+		if(row == N) {
+			printAnswer();
+			System.exit(0);
+		}
+		
 		if(col == N) {
-			return backtracking(row + 1, 0);
+			backtracking(row + 1, 0);
+			return;
 		}
 		
-		if(row == N) { // 끝내야 함 
-			return true;
+		if(game[row][col] != 0) {
+			backtracking(row, col + 1);
+			return;
 		}
 		
-		if(grid[row][col] != 0) {
-			return backtracking(row, col + 1);
-		}
-		
-		for(int i = 1; i <= N; i++) {
-			if(isValid(row, col, i)) {
-				grid[row][col] = i;
-				if(backtracking(row, col + 1)) {
-					return true;
-				}
-				grid[row][col] = 0;
+		for(int num = 1; num <= N; num++) {
+			if(isValid(row, col, num)) {
+				game[row][col] = num;
+				backtracking(row, col + 1);
+				game[row][col] = 0;
 			}
 		}
-		return false;
-		
 	}
 	
 	private static boolean isValid(int row, int col, int num) {
 		for(int i = 0; i < N; i++) {
-			if(grid[i][col] == num) {
+			if(game[row][i] == num) {
 				return false;
 			}
 		}
 		
 		for(int i = 0; i < N; i++) {
-			if(grid[row][i] == num) {
+			if(game[i][col] == num) {
 				return false;
 			}
 		}
 		
+		// 9개의 사각형 검사 
 		int startRow = row / 3 * 3;
-		int startCol= col / 3 * 3;
-		
+		int startCol = col / 3 * 3;
 		for(int i = startRow; i < startRow + 3; i++) {
 			for(int j = startCol; j < startCol + 3; j++) {
-				if(grid[i][j] == num) {
+				if(game[i][j] == num) {
 					return false;
 				}
 			}
 		}
+		
 		return true;
+	}
+	
+	private static void printAnswer() {
+		for(int i = 0; i < N; i++) {
+			for(int j = 0; j < N; j++) {
+				sb.append(game[i][j]);
+			}
+			sb.append("\n");
+		}
+		System.out.println(sb);
 	}
 }
