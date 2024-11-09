@@ -7,6 +7,7 @@ import java.util.*;
 * N이 최대 10이라 부분집합 마음 놓고 돌림
 * 그래프 연결성 따지는 문제에서 하나의 노드를 잡고 bfs로 돌리는 부분은 힌트를 얻어서 함. 각 그룹별 sign을 Bfs에 넣어서 확인하는 거 얻음
 * 17퍼 에러 => 만약 6개 에러가 있고, 1 : 5 로 나눈 경우는 ㄱㅊ아서 이 부분을 고려 못함 : 근데 고려 방법을 모르겠는데
+* 결국 이것도 힌트 얻음. 기존 코드는 bfs를 무작정 돌렸는데 ,
 * */
 public class Main {
     private static int N;
@@ -33,6 +34,7 @@ public class Main {
                 graph[a][i] = 1;
             }
         }
+
 
         subset(0, new boolean[N]);
         System.out.println(solution == Integer.MAX_VALUE ? -1 : solution);
@@ -95,6 +97,7 @@ public class Main {
         Queue<Integer> queue = new LinkedList<>();
         boolean[] visited = new boolean[N];
         queue.add(node);
+        visited[node] = true;
         while(!queue.isEmpty()) {
             int cur = queue.poll();
             for(int i = 0; i < N; i++) {
