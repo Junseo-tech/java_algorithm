@@ -61,6 +61,9 @@ public class Main {
         dist[K] = 0;
         while(!pq.isEmpty()) {
             Node temp = pq.poll();
+
+            if(dist[temp.v] > temp.weight) continue;
+            
             for(Node node : nodes[temp.v]) {
                 if(dist[node.v] > temp.weight + node.weight) {
                     dist[node.v] = temp.weight + node.weight;
