@@ -2,25 +2,30 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
+    public static StringBuilder sb = new StringBuilder();
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     public static void main(String args[]) throws IOException {
-        String line;
 
-        StringBuilder sb = new StringBuilder();
-        while((line = br.readLine()) != null) {
-            String[] lines = line.split(" ");
 
-            if(lines.length < 2) break;
 
-            String s = lines[0];
-            String t = lines[1];
+        while(true) {
+            String line = br.readLine();
+            if(line == null) break;
+
+
+            StringTokenizer st = new StringTokenizer(line);
+
+            String s = st.nextToken();
+            String t = st.nextToken();
 
             boolean answer = isSubString(s, t);
-            if(answer) sb.append("Yes").append("\n");
+            if (answer) sb.append("Yes").append("\n");
             else sb.append("No").append("\n");
+
         }
 
         System.out.println(sb);
+
     }
 
 
