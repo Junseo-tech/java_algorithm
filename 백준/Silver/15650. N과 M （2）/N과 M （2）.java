@@ -1,45 +1,38 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
 public class Main {
-    private static int N,M; // 1부터 N까지 자연수 중에서 중복 없이 M개 고른 수열
-    private static List<int[]> answer = new ArrayList<>();
+    private static int N,M;
+    private static StringBuilder answer;
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static StringBuilder sb = new StringBuilder();
-    public static void main(String[] args) throws IOException {
+    public static void main(String args[]) throws IOException {
         StringTokenizer st = new StringTokenizer(br.readLine());
+
+        answer = new StringBuilder();
+
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        comb(0, 0, new boolean[N], new int[M]);
+        comb(0, 1, new int[M], new boolean[N + 1]);
 
-        for(int i = 0; i < answer.size(); i++) {
-            for(int j = 0; j < answer.get(i).length; j++) {
-                sb.append(answer.get(i)[j]);
-                sb.append(" ");
-            }
-            sb.append("\n");
-        }
-        System.out.println(sb.toString());
+        System.out.println(answer);
     }
 
-    private static void comb(int start, int depth, boolean[] visited, int[] arr) {
+    private static void comb(int depth, int start, int[] num, boolean[] visited) {
         if(depth == M) {
-            answer.add(arr.clone());
+            for(int i = 0; i < M; i++) {
+                answer.append(num[i]).append(" ");
+            }
+            answer.append("\n");
             return;
         }
-
-        for(int i = start; i < N; i++) {
+        for(int i = start; i <= N; i++) {
+            if(!visited[i]) {
+                num[depth] = i;
                 visited[i] = true;
-                arr[depth] = i + 1;
-                comb(i+1, depth+1, visited, arr);
+                comb(depth + 1, i + 1, num, visited);
                 visited[i] = false;
             }
         }
     }
-
-
+}
