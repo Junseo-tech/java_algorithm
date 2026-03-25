@@ -1,51 +1,46 @@
 import java.util.*;
 import java.io.*;
 
-
+// 중복된 알파벳이 나올 수 있음, 같은 애너그램은 안됨. 정렬해서 되어야 함.
 public class Main {
     private static int N;
-    private static char[] now;
-    private static int[] alphaCount; // 알파벳 26개
+    private static int[] alpha;
     private static StringBuilder sb;
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     public static void main(String args[]) throws IOException {
-        sb = new StringBuilder();
         N = Integer.parseInt(br.readLine());
+        sb = new StringBuilder();
         for(int i = 0; i < N; i++) {
             String line = br.readLine();
-            now = new char[line.length()];
-            alphaCount = new int[26];
+            alpha = new int[26];
             for(int j = 0; j < line.length(); j++) {
-                alphaCount[line.charAt(j) - 'a']++;
+                int num = line.charAt(j) - 'a';
+                alpha[num] += 1;
             }
-            permutation( 0, line.length());
-
+            backtracking(0, new int[line.length()], line.length());
         }
 
         System.out.println(sb);
-
     }
 
 
-    private static void permutation(int depth, int length) {
+
+    private static void backtracking(int depth, int[] gram, int length) {
         if(depth == length) {
             for(int i = 0; i < length; i++) {
-                sb.append(now[i]);
+                char temp = (char) (gram[i] + 'a');
+                sb.append(temp);
             }
             sb.append("\n");
             return;
         }
-
         for(int i = 0; i < 26; i++) {
-            if(alphaCount[i] > 0) {
-                now[depth] = (char) (i + 'a');
-                depth++;
-                alphaCount[i]--;
-                permutation(depth, length);
-                depth--;
-                alphaCount[i]++;
+            if(alpha[i] > 0) {
+                alpha[i] -= 1;
+                gram[depth] = i;
+                backtracking(depth + 1, gram, length);
+                alpha[i] += 1;
             }
         }
     }
-
 }
