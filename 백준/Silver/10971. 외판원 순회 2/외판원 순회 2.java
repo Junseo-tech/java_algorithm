@@ -29,6 +29,8 @@ public class Main {
     // 4 3 2 0 1 4
 
     private static void backtracking(int depth, int start, boolean[] visited, int weight) {
+        if(weight >= answer) return;
+        
         if(depth == N) {
             if(map[start][0] != 0) {
                 answer = Math.min(answer, weight + map[start][0]);
