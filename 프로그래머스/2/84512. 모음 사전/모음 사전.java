@@ -13,16 +13,18 @@ class Solution {
     
     private static void permutation(int length, String target, String word, char[] alpha) {
         
-        if(!word.equals("")) {
+        if(!word.equals("")) { // 순서니까 A부터 세기 
             count++;
         }
         
-        if(target.equals(word)) {
+        if(target.equals(word)) { // 맞으면 return 
             answer = count;
             return;
         }
         
-        if(length == 5) return;
+        if(answer > 0) return;
+        
+        if(length == 5) return; // 5넘으면 못만듦
         
         for(int i = 0; i < 5; i++) {
             permutation(length + 1, target, word + alpha[i], alpha);
