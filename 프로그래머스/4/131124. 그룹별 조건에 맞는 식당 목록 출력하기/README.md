@@ -1,10 +1,10 @@
 # [level 4] 그룹별 조건에 맞는 식당 목록 출력하기 - 131124 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131124) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131124#qna) 
 
 ### 성능 요약
 
-메모리: 0.0 MB, 시간: 0.00 ms
+메모리: undefined, 시간: 
 
 ### 구분
 
@@ -12,11 +12,11 @@
 
 ### 채점결과
 
-Empty
+합계: 100.0 / 100.0
 
 ### 제출 일자
 
-2024년 10월 22일 10:12:13
+2026년 04월 28일 14:05:48
 
 ### 문제 설명
 
