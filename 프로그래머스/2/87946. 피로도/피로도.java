@@ -1,30 +1,42 @@
-// 최소 필요 피로도(가지고 있어야 함) , 소모 피로도(던전 탐험 후 소모되는 피로도)
-// 던전을 최대한 많이 탐험하고 싶다. 
-// 유저가 탐험할 수 있는 최대 던전 수 return
-
+// 최대한 많이 탐험
+// 최소 필요 피로도, 소모 피로도 => 탐험할 수 있는 최대 던전 수 return
 class Solution {
-    private static int answer;
-    public int solution(int k, int[][] dungeons) { // 던전 최대 8개 
+    static int N;
+    static int answer;
+    public int solution(int k, int[][] dungeons) {
         answer = -1;
-        int N = dungeons.length;
+        N = dungeons.length;
         
-        backtracking(N, 0, new boolean[N], k, dungeons, 0);
+        permutation(new boolean[N], k, 0, dungeons, new int[N]);
         
         return answer;
     }
     
-    // 순열 
-    private void backtracking(int N, int depth, boolean[] visited, int k, int[][] dungeons, int count) {
+    
+    private void permutation(boolean[] visited, int k, int depth, int[][] dungeons, int[] sequence) { 
+        if(depth == N) {
+            answer = Math.max(answer, countDungeons(k, sequence, dungeons));
+            return;
+        }
         
-        answer = Math.max(answer, count);
-
         for(int i = 0; i < N; i++) {
-            if(!visited[i] && dungeons[i][0] <= k) {
+            if(!visited[i]) {
                 visited[i] = true;
-                backtracking(N, depth + 1, visited, k - dungeons[i][1], dungeons, count + 1);
+                sequence[depth] = i;
+                permutation(visited, k, depth + 1, dungeons, sequence);
                 visited[i] = false;
             }
         }
     }
     
+    private int countDungeons(int k, int[] sequence, int[][] dungeons) {
+        int count = 0;
+        for(int i = 0; i < N; i++) {
+            if(k - dungeons[sequence[i]][0] >= 0) {
+                k -= dungeons[sequence[i]][1];
+                count++;
+            }
+        }
+        return count;
+    }
 }
