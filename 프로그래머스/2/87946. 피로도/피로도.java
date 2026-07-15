@@ -7,36 +7,21 @@ class Solution {
         answer = -1;
         N = dungeons.length;
         
-        permutation(new boolean[N], k, 0, dungeons, new int[N]);
+        permutation(new boolean[N], k, 0, dungeons);
         
         return answer;
     }
     
     
-    private void permutation(boolean[] visited, int k, int depth, int[][] dungeons, int[] sequence) { 
-        if(depth == N) {
-            answer = Math.max(answer, countDungeons(k, sequence, dungeons));
-            return;
-        }
+    private void permutation(boolean[] visited, int k, int depth, int[][] dungeons) { 
+        answer = Math.max(answer, depth);
         
         for(int i = 0; i < N; i++) {
-            if(!visited[i]) {
+            if(!visited[i] && k >= dungeons[i][0]) {
                 visited[i] = true;
-                sequence[depth] = i;
-                permutation(visited, k, depth + 1, dungeons, sequence);
+                permutation(visited, k - dungeons[i][1], depth + 1, dungeons);
                 visited[i] = false;
             }
         }
-    }
-    
-    private int countDungeons(int k, int[] sequence, int[][] dungeons) {
-        int count = 0;
-        for(int i = 0; i < N; i++) {
-            if(k - dungeons[sequence[i]][0] >= 0) {
-                k -= dungeons[sequence[i]][1];
-                count++;
-            }
-        }
-        return count;
     }
 }
